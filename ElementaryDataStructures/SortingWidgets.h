@@ -10,6 +10,7 @@ void SortingWidgets(Widget<DataType>* pArray, bool ascending = true)
 
 	Widget<DataType>* low;
 
+
 	for (size_t i = 0; i < size - 1; ++i)	
 	{
 		low = &pArray[i];
@@ -37,7 +38,6 @@ void SortingWidgets(Widget<DataType>* pArray, bool ascending = true)
 			SwapWidget<Widget<DataType>, DataType>(&pArray[i], low);
 		}
 	}
-
 	PrintArrayWidget<Widget<DataType> ,DataType>(pArray, size);
 
 }

@@ -1,19 +1,6 @@
 #pragma once
 #include <iostream>
 
-// true if left is bigger
-template<class Data, class DataType>
-bool Compare(Data widgetA, Data widgetB)
-{
-	DataType a, b;
-
-	a = widgetA.m_width * widgetA.m_height;
-	b = widgetB.m_width * widgetB.m_height;
-
-	if (a > b)
-		return true;
-	return false;
-}
 
 template<class Data, class DataType>
 DataType GetArea(Data widgetA)
@@ -25,9 +12,22 @@ DataType GetArea(Data widgetA)
 	return area;
 }
 
+// true if left is bigger
+template<class Data, class DataType>
+bool Compare(Data widgetA, Data widgetB)
+{
+	DataType a, b;
+
+	a = GetArea<Widget<DataType>, DataType>(widgetA);
+	b = GetArea<Widget<DataType>, DataType>(widgetB);
+
+	if (a > b)
+		return true;
+	return false;
+}
 
 template<class Array, class DataType>
-void PrintArrayWidget(Array* pArray, DataType size)
+void PrintArrayWidget(Array* pArray, size_t size)
 {
 
 	DataType width;
@@ -62,15 +62,50 @@ void SwapWidget(Data* widgetA, Data* widgetB)
 }
 
 template<class Array, class DataType>
-size_t FindMax(Array* pArray, DataType size)
+const size_t FindMax(Array* pArray, DataType size)
 {
-	size_t maxIndex = 0;
+	const size_t maxIndex = 0;
 	for (size_t i = 1; i < size; ++i)
 	{
-		if (Compare(pArray[maxIndex], pArray[i]))
+		if (Compare<Widget<DataType>, DataType>(pArray[maxIndex], pArray[i]))
 		{
 			maxIndex = i;
 		}
 	}
+	return maxIndex;
+}
 
+template<class Array, class DataType>
+void CheckSorted(Array* pArray, size_t size, bool ascending = true)
+{
+	for (size_t i = 1; i < size; ++i)
+	{
+		if (ascending)
+		{
+			if (Compare<Widget<DataType>, DataType> ( pArray[i - 1], pArray[i] ))
+			{
+				std::cout << "This is Not Sorted! \n";
+			}
+		}
+		else if (!ascending)
+		{
+			if (!Compare<Widget<DataType>, DataType>(pArray[i - 1], pArray[i]))
+			{
+				std::cout << "This is Not Sorted! \n";
+			}
+		}
+	}
+}
+
+template <class Array, class DataType>
+void SetRandomizeNumbers(Array* pArray, size_t size, size_t range)
+{
+	DataType randomNumber;
+	for (size_t i = 0; i < size; ++i)
+	{
+		randomNumber = rand() % range;
+		pArray[i].m_width = randomNumber;
+		randomNumber = rand() % range;
+		pArray[i].m_height = randomNumber;
+	}
 }

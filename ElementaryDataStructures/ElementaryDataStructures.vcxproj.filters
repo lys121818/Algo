@@ -13,24 +13,36 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Widget">
+      <UniqueIdentifier>{2acd5b37-0b55-4ce0-904f-2a6c4c34d2ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\LinkedList">
+      <UniqueIdentifier>{6d0e5766-760c-4b35-ac75-ab8748bb3644}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SortingWidgets.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Widget.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="Sorting.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="LinkedList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Widget.h">
+      <Filter>Source Files\Widget</Filter>
+    </ClInclude>
     <ClInclude Include="Others.h">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Widget</Filter>
+    </ClInclude>
+    <ClInclude Include="SortingWidgets.h">
+      <Filter>Source Files\Widget</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LinkedList.cpp">
+      <Filter>Source Files\LinkedList</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

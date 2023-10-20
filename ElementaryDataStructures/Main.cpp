@@ -2,44 +2,72 @@
 #include "Widget.h"
 #include "SortingWidgets.h"
 #include "Sorting.h"
+#include "LinkedList.h"
+
+/*	TEST DEFINES
+#define WIDGET
+*/
+#define LINKED_LIST
+
 
 // This Would change whole data type of widget struct and functions
-#define ASCENDING	false
+#define ASCENDING	true
 #define SIZE		6
-using DataType = float;
+#define RANDOMRANGE	1000
+using DataType = int;
 using ArraySize = size_t;
 
 
 int main()
 {
+	srand(time(nullptr));
+	// WIDGET TEST
+#ifdef WIDGET
+	// SETTINGS
+
+	const size_t range = RANDOMRANGE;
+
 	const bool ascending = ASCENDING;
 
 	const ArraySize size = SIZE;
 
 	Widget<DataType> pArray[size];
 
-
-	pArray[0].m_width = 21.3;
-	pArray[0].m_height = 10.5;
-
-	pArray[1].m_width = 13.0;
-	pArray[1].m_height = 16.9;
-
-	pArray[2].m_width = 14.6;
-	pArray[2].m_height = 26.4;
-
-	pArray[3].m_width = 11.2;
-	pArray[3].m_height = 17.6;
-	
-	pArray[4].m_width = 12.5;
-	pArray[4].m_height = 10.1;
-	
-	pArray[5].m_width = 12.7;
-	pArray[5].m_height = 20.4;
-
-
+	SetRandomizeNumbers<Widget<DataType>,DataType>(pArray, size, range);
 	SortingWidgets<DataType, size>(pArray, ascending);
-	//WidgetCountingSort<DataType, size>(pArray);
+	CheckSorted<Widget<DataType>, DataType>(pArray, size, ascending);
+#endif
 
+	// LINKED_LIST TEST
+#ifdef LINKED_LIST
+
+	LinkedList linkedList;
+
+	//linkedList.Push_Back(1);
+	//linkedList.Push_Front(2);
+	//linkedList.Push_Back(3);
+	//linkedList.Push_Front(4);
+	//linkedList.Push_Back(5);
+	for (size_t i = 0; i < 10; ++i)
+	{
+		size_t randIndex = rand() % 5;
+		linkedList.Insert(i, randIndex);
+
+		randIndex = rand() % 5;
+		linkedList.Delete(randIndex);
+	}
+	//linkedList.Insert(1, 3);
+	//linkedList.Insert(2, 2);
+	//linkedList.Insert(3, 2);
+	//linkedList.Insert(4, 2);
+	//linkedList.Insert(5, 2);
+	//
+	//linkedList.Delete(4);
+	//linkedList.Delete(4);
+	//
+	//linkedList.Delete(3);
+	linkedList.Print();
+
+#endif
 	return 0;
 }
