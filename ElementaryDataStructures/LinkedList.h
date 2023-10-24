@@ -4,6 +4,7 @@
 class LinkedList
 {
 private:
+
 	struct Node
 	{
 		int data;
@@ -20,17 +21,20 @@ private:
 	};
 
 	Node* m_pHead = nullptr;
-
+	Node* m_pTail = nullptr;
 	Node* FindNode(int dataToFind);
+
+	size_t m_size = 0;
 
 public:
 	LinkedList() = default;
-	~LinkedList() { delete m_pHead; }
+	~LinkedList() { delete m_pHead, m_pTail; }
 
 	void Push_Front(int data);
 	void Push_Back(int data);
 	void Insert(int data, size_t position);
 
+	void Clear();
 	void Delete(int data);
 	void Print();
 private:

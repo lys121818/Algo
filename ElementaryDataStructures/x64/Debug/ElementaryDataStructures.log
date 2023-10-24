@@ -1,0 +1,7 @@
+﻿  LinkedList.cpp
+  Main.cpp
+Z:\GAP_235\Module_06\ElementaryDataStructures\ElementaryDataStructures\Main.cpp(24,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+Z:\GAP_235\Module_06\ElementaryDataStructures\ElementaryDataStructures\Main.cpp(56,23): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+Z:\GAP_235\Module_06\ElementaryDataStructures\ElementaryDataStructures\Main.cpp(57,22): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+  Generating Code...
+  ElementaryDataStructures.vcxproj -> Z:\GAP_235\Module_06\ElementaryDataStructures\x64\Debug\ElementaryDataStructures.exe
