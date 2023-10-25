@@ -2,6 +2,7 @@
 #include <iostream>
 
 
+// Return W * H
 template<class Data, class DataType>
 DataType GetArea(Data widgetA)
 {
@@ -18,21 +19,24 @@ bool Compare(Data widgetA, Data widgetB)
 {
 	DataType a, b;
 
-	a = GetArea<Widget<DataType>, DataType>(widgetA);
-	b = GetArea<Widget<DataType>, DataType>(widgetB);
+	a = GetArea<Data, DataType>(widgetA);
+	b = GetArea<Data, DataType>(widgetB);
 
 	if (a > b)
 		return true;
 	return false;
 }
 
+// Print the Widget
 template<class Array, class DataType>
 void PrintArrayWidget(Array* pArray, size_t size)
 {
 
-	DataType width;
+	DataType width;	
 	DataType height;
 	DataType area;
+
+
 	for (size_t i = 0; i < size; ++i)
 	{
 		width = pArray[i].m_width;
@@ -50,10 +54,11 @@ void PrintArrayWidget(Array* pArray, size_t size)
 	
 }
 
+// Swap A and B
 template<class Data, class DataType>
 void SwapWidget(Data* widgetA, Data* widgetB)
 {
-	Widget<DataType> temp;
+	Data temp;
 
 	temp = *widgetA;
 	*widgetA = *widgetB;
@@ -61,13 +66,14 @@ void SwapWidget(Data* widgetA, Data* widgetB)
 
 }
 
-template<class Array, class DataType>
-const size_t FindMax(Array* pArray, DataType size)
+// Return index of Max Widget
+template<class Data, class DataType>
+size_t FindMax(Data* pArray, DataType size)
 {
-	const size_t maxIndex = 0;
+	size_t maxIndex = 0;
 	for (size_t i = 1; i < size; ++i)
 	{
-		if (Compare<Widget<DataType>, DataType>(pArray[maxIndex], pArray[i]))
+		if (Compare<Data, DataType>(pArray[i], pArray[maxIndex]))
 		{
 			maxIndex = i;
 		}
@@ -75,21 +81,22 @@ const size_t FindMax(Array* pArray, DataType size)
 	return maxIndex;
 }
 
-template<class Array, class DataType>
-void CheckSorted(Array* pArray, size_t size, bool ascending = true)
+// Check if the Widget is sorted in ascending or descending
+template<class Data, class DataType>
+void CheckSorted(Data* pArray, size_t size, bool ascending = true)
 {
 	for (size_t i = 1; i < size; ++i)
 	{
 		if (ascending)
 		{
-			if (Compare<Widget<DataType>, DataType> ( pArray[i - 1], pArray[i] ))
+			if (Compare<Data, DataType> ( pArray[i - 1], pArray[i] ))
 			{
 				std::cout << "This is Not Sorted! \n";
 			}
 		}
 		else if (!ascending)
 		{
-			if (!Compare<Widget<DataType>, DataType>(pArray[i - 1], pArray[i]))
+			if (!Compare<Data, DataType>(pArray[i - 1], pArray[i]))
 			{
 				std::cout << "This is Not Sorted! \n";
 			}
@@ -97,15 +104,27 @@ void CheckSorted(Array* pArray, size_t size, bool ascending = true)
 	}
 }
 
-template <class Array, class DataType>
-void SetRandomizeNumbers(Array* pArray, size_t size, size_t range)
+// Set Random width and height to the widget
+template <class Data, class DataType>
+void SetRandomizeNumbers(Data* pArray, size_t size, size_t range)
 {
 	DataType randomNumber;
+
 	for (size_t i = 0; i < size; ++i)
 	{
 		randomNumber = rand() % range;
 		pArray[i].m_width = randomNumber;
 		randomNumber = rand() % range;
 		pArray[i].m_height = randomNumber;
+	}
+}
+
+// Copy B to A
+template<typename Data, typename DataType>
+void CopyWidget(Data* pArrayA, Data*pArrayB, size_t size)
+{
+	for (size_t i = 0; i < size; ++i)
+	{
+		pArrayA[i] = pArrayB[i];
 	}
 }

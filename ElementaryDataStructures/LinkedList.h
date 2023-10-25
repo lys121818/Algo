@@ -15,8 +15,7 @@ private:
 		Node(int data) : data(data) {}
 		~Node() { delete m_pNext; m_pNext = m_pPrev = nullptr; }
 
-		void clear();
-		//Node* FindNode(int dataToFind);
+		void ClearNode();
 
 	};
 
@@ -30,9 +29,13 @@ public:
 	LinkedList() = default;
 	~LinkedList() { delete m_pHead, m_pTail; }
 
+	void Insert(int data, size_t position);
+
 	void Push_Front(int data);
 	void Push_Back(int data);
-	void Insert(int data, size_t position);
+
+	void Pop_Back();
+	void Pop_Front();
 
 	void Clear();
 	void Delete(int data);

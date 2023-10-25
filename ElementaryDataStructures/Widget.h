@@ -6,4 +6,5 @@ struct Widget
 {
 	DataType m_width;
 	DataType m_height;
+
 };

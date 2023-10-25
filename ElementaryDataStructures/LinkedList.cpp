@@ -121,9 +121,12 @@ void LinkedList::Insert(int data, size_t position)
 	}
 
 	Node* pIterator;
+
+
 	// if position is lower half part of the linked list
 	if (position <= (m_size / 2))
 	{
+		// Setting Iterator
 		pIterator = m_pHead;
 		isCloseToHead = true;
 		index = 0;
@@ -138,6 +141,7 @@ void LinkedList::Insert(int data, size_t position)
 	// if position is upper half part of the linked list
 	else
 	{
+		// Setting Iterator
 		pIterator = m_pTail;
 		isCloseToHead = false;
 		index = m_size - 1;
@@ -150,7 +154,7 @@ void LinkedList::Insert(int data, size_t position)
 		}
 	}
 
-	// Insert on middle
+	// Inserting to position
 	newNode->m_pPrev = pIterator->m_pPrev;
 	newNode->m_pNext = pIterator;
 
@@ -159,6 +163,70 @@ void LinkedList::Insert(int data, size_t position)
 
 	// Add size
 	++m_size;
+}
+
+// delete from tail
+void LinkedList::Pop_Back()
+{
+	if (m_pHead == nullptr)
+	{
+		std::cout << "Nothing inside the list";
+		return;
+	}
+	Node* pNodeToDelete = m_pTail;
+
+	// Set Tail Node
+	m_pTail = pNodeToDelete->m_pPrev;
+
+	// Array is empty
+	if (m_pTail == nullptr)
+	{
+		m_pHead = nullptr;
+	}
+	else
+	{
+		// Set Tail Node
+		m_pTail->m_pNext = nullptr;
+	}
+
+	pNodeToDelete->ClearNode();
+	delete pNodeToDelete;
+
+	// decrease size
+	--m_size;
+}
+
+// delete from head
+void LinkedList::Pop_Front()
+{
+	if (m_pHead == nullptr)
+	{
+		std::cout << "Nothing inside the list";
+		return;
+	}
+
+	Node* pNodeToDelete = m_pHead;
+
+	// Set Head Node;
+	m_pHead = pNodeToDelete->m_pNext;
+
+	// Array is empty
+	if (m_pHead == nullptr)
+	{
+		m_pTail = nullptr;
+	}
+	else
+	{
+		// Set Tail Node
+		m_pHead->m_pPrev = nullptr;
+	}
+
+	// Delete
+	pNodeToDelete->ClearNode();
+	delete pNodeToDelete;
+
+	// decrease size
+	--m_size;
 }
 
 
@@ -172,6 +240,7 @@ void LinkedList::Delete(int data)
 	if (pNodeToDelete == nullptr)
 		return;
 
+	// Setting Prev node
 	// data is not head
 	if (pNodeToDelete->m_pPrev != nullptr)
 	{
@@ -179,6 +248,8 @@ void LinkedList::Delete(int data)
 	}
 	else
 		m_pHead = pNodeToDelete->m_pNext;
+
+	// Setting next node
 	// data is not tail
 	if (pNodeToDelete->m_pNext != nullptr)
 	{
@@ -187,7 +258,7 @@ void LinkedList::Delete(int data)
 	else
 		m_pTail = pNodeToDelete->m_pPrev;
 
-	pNodeToDelete->clear();
+	pNodeToDelete->ClearNode();
 	delete pNodeToDelete;
 	--m_size;
 
@@ -203,7 +274,7 @@ void LinkedList::Clear()
 		while (m_pHead)
 		{
 			m_pHead = pIterator->m_pNext;
-			pIterator->clear();
+			pIterator->ClearNode();
 			delete pIterator;
 			pIterator = m_pHead;
 		}
@@ -256,7 +327,7 @@ void LinkedList::Print()
 
 }
 
-void LinkedList::Node::clear()
+void LinkedList::Node::ClearNode()
 {
 	m_pNext = nullptr;
 	m_pPrev = nullptr;

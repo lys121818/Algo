@@ -1,14 +1,15 @@
 #pragma once
 #include "Widget.h"
 #include "Others.h"
+#include <assert.h>
 #include <iostream>
 
 
-template<class DataType, size_t size>
-void SortingWidgets(Widget<DataType>* pArray, bool ascending = true)
+template<typename T, typename DataType, size_t size>
+void SortingWidgets(T* pArray, bool ascending = true)
 {
-
-	Widget<DataType>* low;
+	
+	T* low;
 
 
 	for (size_t i = 0; i < size - 1; ++i)	
@@ -19,54 +20,64 @@ void SortingWidgets(Widget<DataType>* pArray, bool ascending = true)
 		{
 			if (ascending)
 			{
-				if (Compare<Widget<DataType>, DataType>(*low, pArray[j]) )
+				// Save address if the area is lower
+				if (Compare<T, DataType>(*low, pArray[j]) )
 				{
 					low = &pArray[j];
 				}
 			}
 			else
 			{
-				if (!Compare<Widget<DataType>, DataType>(*low, pArray[j]))
+				// Save address if the area is larger
+				if (!Compare<T, DataType>(*low, pArray[j]))
 				{
 					low = &pArray[j];
 				}
 			}
 		}
 
+		// Swap widget with low value
 		if (low != &pArray[i])
 		{
-			SwapWidget<Widget<DataType>, DataType>(&pArray[i], low);
+			SwapWidget<T, DataType>(&pArray[i], low);
 		}
 	}
-	PrintArrayWidget<Widget<DataType> ,DataType>(pArray, size);
+	PrintArrayWidget<T ,DataType>(pArray, size);
 
 }
 
 
-// TODO: WORKING ON COUNTING SORT
-
-template<class DataType, size_t size>
-void WidgetCountingSort(Widget<DataType>* pArray)
+template<typename T,typename DataType>
+void WidgetCountingSort(T* pArray, const size_t size,bool ascending = true)
 {
-	/*
+
 	std::cout << "Array Before Sortted\n";
-	PrintArrayWidget<Widget<DataType>, DataType>(pArray, size);
+	PrintArrayWidget<T, DataType>(pArray, size);
 
-	size_t maxValue = FindMax(pArray, size);
-	const size_t arraySizeC = maxValue + 1;
+	// Find index of max Widget
+	size_t max = FindMax <T, DataType>(pArray, size);
 
-	Widget<DataType>* pSorted[size]{ 0 };
-	size_t* pCounting[arraySizeC]{ 0 };
+	// Data of max widget
+	T maxArea = pArray[max];
+
+	// Create array size of max of widget
+	const size_t arraySizeC = GetArea<T, DataType>(maxArea) + 1;
+
+	// Might overflow since it's creating the array with size of area
+	assert(arraySizeC < 100000);
+
+	// Create array for counting
+	size_t* pCounting = new size_t[arraySizeC]{0};
+
+	// Create array to store sorted value
+	T* pSorted = new T[size]{0};
 
 	// add count to count array of value
 	for (size_t i = 0; i < size; ++i)
 	{
-		size_t index = pArray[i];
+		size_t index = GetArea<T,DataType>( pArray[i]);
 		pCounting[index]++;
 	}
-
-
-
 
 	// Add previous index value to current index value of count array
 	for (size_t i = 1; i < arraySizeC; ++i)
@@ -74,23 +85,45 @@ void WidgetCountingSort(Widget<DataType>* pArray)
 		pCounting[i] += pCounting[i - 1];
 	}
 
-	// Sorting array using count array
-	for (size_t i = size; i > 0; --i)
+
+	if (ascending)
 	{
-		size_t arrayElement = pArray[i - 1];
-		size_t sortIndex = pCounting[arrayElement] - 1;
+		// Sorting array using count array
+		for (size_t i = size; i > 0; --i)
+		{
+			size_t arrayElement = GetArea<T,DataType>( pArray[i - 1]);
+			size_t sortIndex = pCounting[arrayElement] - 1;
 
-		pSorted[sortIndex] = arrayElement;
+			pSorted[sortIndex] = pArray[i - 1];
 
-		// Decrease the count array to handle duplicate value
-		--pCounting[arrayElement];
+			// Decrease the count array to handle duplicate value
+			--pCounting[arrayElement];
+		}
 	}
+	// descending
+	else
+	{
+		for (size_t i = 1; i < size + 1; ++i)
+		{
+			size_t arrayElement = GetArea<T, DataType>(pArray[i - 1]);
+			size_t sortIndex = size - pCounting[arrayElement];
+
+			pSorted[sortIndex] = pArray[i - 1];
+
+			pSorted[sortIndex] = pArray[i - 1];
+
+			--pCounting[arrayElement];
+		}
+	}
+
+	// Copy Sorted Widget to original Widget
+	CopyWidget<T,DataType>(pArray, pSorted,size);
+
 	std::cout << "Print Array" << std::endl;
-	PrintArrayWidget(pArray, size);
+	PrintArrayWidget<T, DataType>(pArray, size);
 
 	// delete pointer
 	delete[] pSorted;
 	delete[] pCounting;
-	*/
 }
 
