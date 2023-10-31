@@ -19,6 +19,9 @@
     <Filter Include="Source Files\LinkedList">
       <UniqueIdentifier>{6d0e5766-760c-4b35-ac75-ab8748bb3644}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\HashTable">
+      <UniqueIdentifier>{dff46b3b-9e1a-42c5-9e1d-c75389cbe79b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sorting.h">
@@ -36,13 +39,19 @@
     <ClInclude Include="SortingWidgets.h">
       <Filter>Source Files\Widget</Filter>
     </ClInclude>
+    <ClInclude Include="HashTable.h">
+      <Filter>Source Files\HashTable</Filter>
+    </ClInclude>
+    <ClInclude Include="HashTableExample.h">
+      <Filter>Source Files\HashTable</Filter>
+    </ClInclude>
+    <ClInclude Include="HashItem.h">
+      <Filter>Source Files\HashTable</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LinkedList.cpp">
-      <Filter>Source Files\LinkedList</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

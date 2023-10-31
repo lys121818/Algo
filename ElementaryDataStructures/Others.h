@@ -4,7 +4,7 @@
 
 // Return W * H
 template<class Data, class DataType>
-DataType GetArea(Data widgetA)
+DataType GetArea(const Data& widgetA)
 {
 	DataType area;
 
@@ -15,7 +15,7 @@ DataType GetArea(Data widgetA)
 
 // true if left is bigger
 template<class Data, class DataType>
-bool Compare(Data widgetA, Data widgetB)
+bool Compare(const Data& widgetA,const Data& widgetB)
 {
 	DataType a, b;
 
@@ -29,7 +29,7 @@ bool Compare(Data widgetA, Data widgetB)
 
 // Print the Widget
 template<class Array, class DataType>
-void PrintArrayWidget(Array* pArray, size_t size)
+void PrintArrayWidget(const Array* pArray, const size_t& size)
 {
 
 	DataType width;	
@@ -68,7 +68,7 @@ void SwapWidget(Data* widgetA, Data* widgetB)
 
 // Return index of Max Widget
 template<class Data, class DataType>
-size_t FindMax(Data* pArray, DataType size)
+size_t FindMax(const Data* pArray, const DataType& size)
 {
 	size_t maxIndex = 0;
 	for (size_t i = 1; i < size; ++i)
@@ -83,7 +83,7 @@ size_t FindMax(Data* pArray, DataType size)
 
 // Check if the Widget is sorted in ascending or descending
 template<class Data, class DataType>
-void CheckSorted(Data* pArray, size_t size, bool ascending = true)
+void CheckSorted(const Data* pArray, size_t size, bool ascending = true)
 {
 	for (size_t i = 1; i < size; ++i)
 	{
@@ -106,7 +106,7 @@ void CheckSorted(Data* pArray, size_t size, bool ascending = true)
 
 // Set Random width and height to the widget
 template <class Data, class DataType>
-void SetRandomizeNumbers(Data* pArray, size_t size, size_t range)
+void SetRandomizeNumbers(Data* pArray, const size_t& size, const size_t& range)
 {
 	DataType randomNumber;
 
@@ -121,7 +121,7 @@ void SetRandomizeNumbers(Data* pArray, size_t size, size_t range)
 
 // Copy B to A
 template<typename Data, typename DataType>
-void CopyWidget(Data* pArrayA, Data*pArrayB, size_t size)
+void CopyWidget(Data* pArrayA, const Data* pArrayB, const size_t& size)
 {
 	for (size_t i = 0; i < size; ++i)
 	{

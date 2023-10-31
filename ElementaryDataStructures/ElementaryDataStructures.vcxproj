@@ -127,6 +127,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="HashItem.h" />
+    <ClInclude Include="HashTable.h" />
+    <ClInclude Include="HashTableExample.h" />
     <ClInclude Include="LinkedList.h" />
     <ClInclude Include="Others.h" />
     <ClInclude Include="Sorting.h" />
@@ -134,7 +137,6 @@
     <ClInclude Include="Widget.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="LinkedList.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
