@@ -16,9 +16,6 @@
     <Filter Include="Source Files\Widget">
       <UniqueIdentifier>{2acd5b37-0b55-4ce0-904f-2a6c4c34d2ee}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\LinkedList">
-      <UniqueIdentifier>{6d0e5766-760c-4b35-ac75-ab8748bb3644}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\HashTable">
       <UniqueIdentifier>{dff46b3b-9e1a-42c5-9e1d-c75389cbe79b}</UniqueIdentifier>
     </Filter>
@@ -46,6 +43,9 @@
       <Filter>Source Files\HashTable</Filter>
     </ClInclude>
     <ClInclude Include="HashItem.h">
+      <Filter>Source Files\HashTable</Filter>
+    </ClInclude>
+    <ClInclude Include="FNV.h">
       <Filter>Source Files\HashTable</Filter>
     </ClInclude>
   </ItemGroup>

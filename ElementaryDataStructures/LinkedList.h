@@ -267,6 +267,7 @@ void LinkedList<Value>::Push_Back(Value data)
 	{
 		m_pHead = newNode;
 		m_pTail = newNode;
+		++m_size;
 		return;
 	}
 
