@@ -2,161 +2,163 @@
 #include "LinkedList.h"
 #include "FNV.h"
 
-#define HASH_SIZE 1000
+#define HASH_SIZE	1000
+#define HASH_MAX	1001
 
 using namespace FNV;
 
-template<typename DataType>
+template<typename KeyType, typename HashDataType>
 class HashTable
 {
-	static const size_t s_khashSize = HASH_SIZE;
+	// Store key and data
+	struct HashInfo
+	{
+		KeyType m_key;
+		HashDataType m_data;
+
+		bool operator==(const HashInfo& other) const
+		{
+			return (m_key == other.m_key && m_data == other.m_data);
+		}
+		bool operator!=(const HashInfo& other) const
+		{
+			return (m_key != other.m_key || m_data != other.m_data);
+		}
+	};
+
 
 private:
-	size_t m_hashSize = s_khashSize;
-	LinkedList<DataType>* m_pTable;
+	// default hash size
+	static const size_t s_kHashSize = HASH_SIZE;
 
-	int m_totalItem;
-	int m_size;
+	size_t m_hashSize;
+	LinkedList<HashInfo>* m_pTable;
+
 
 public:
-	template<typename DataType>
-	HashTable(const size_t hashSize = s_khashSize)
+	// Constructor
+	HashTable(const size_t hashSize = s_kHashSize)
 		: m_hashSize(hashSize)
 	{
-		m_pTable = new LinkedList<DataType>[m_hashSize];
+		assert(m_hashSize > 0 && m_hashSize < (size_t)HASH_MAX);
+
+		m_pTable = new LinkedList<HashInfo>[s_kHashSize];
 	}
+	// Destructor
 	~HashTable()
 	{
-	}
-
-
-
-private:
-	bool isNumPrime(int val)
-	{
-		for (int i = 2; (i * i) < val; ++i)
+		if (m_pTable != nullptr)
 		{
-			if ((val % i) == 0)
-				return false;
+			delete[] m_pTable;
 		}
-		return true;
 	}
 
-	int GetNextPrimeNum(int val)
+	void Insert(KeyType key, HashDataType data)
 	{
-		int i;
-		for (i = val + 1;; ++i)
+		uint_32 hash;
+		HashInfo hInfo;
+
+
+		hInfo.m_data = data;
+		hInfo.m_key = key;
+
+
+		hash = HashFuction(key);
+
+		size_t size = m_pTable[hash].GetSize();
+
+		// Check if same key have inserted before
+		for (size_t i = 0; i < size; ++i)
 		{
-			if (isNumPrime(i))
-				break;
-		}
-		return i;
-	}
-
-public:
-	bool Insert(int key, const DataType& obj)
-	{
-
-		int hash = HashFunction(key);
-		int step = StepHashFunction(key);
-
-		std::cout << "Try and insert " << obj << " at hash index: " << hash <<
-			" with step of " << step << std::endl;
-
-		// Look for an empty cell
-		while (m_pTable[hash].GetKey() != -1)
-		{
-			hash += step;
-			hash %= m_size;
-		}
-
-		m_pTable[hash].SetKey(key);
-		m_pTable[hash].SetObj(obj);
-
-		std::cout << "	Actually insert " << obj << " at hash index: " << hash << "\n\n";
-
-		m_totalItem++;
-
-		return true;
-	}
-
-	void Delete(int key)
-	{
-		int hash = HashFunction(key);
-		int step = StepHashFunction(key);
-
-		int orginalHash = hash;
-
-		while (m_pTable[hash].GetKey() != -1)
-		{
-			if (m_pTable[hash].GetKey() == key)
+			if (Find(key))
 			{
-				// Succesfully delete the entry
-				m_pTable[hash].SetKey(-1);
-				m_totalItem--;
+				std::cout << "[HashTable] INSERTION FAIL: Same Key has already Saved in hash Table\n";
 				return;
 			}
-
-			hash += step;
-			hash %= m_size;
-
-			// Can't find entry
-			if (orginalHash == hash)
-				return;
 		}
+
+		m_pTable[hash].Push_Back(hInfo);
+
 	}
 
-	bool Find(int key, DataType* obj)
+	void Delete(KeyType key)
 	{
-		int hash = HashFunction(key);
-		int step = StepHashFunction(key);
+		uint_32 hash;
+		hash = HashFuction(key);
 
-		int originalHash = hash;
+		size_t size = m_pTable[hash].GetSize();
 
-		while (m_pTable[hash].GetKey() != -1)
+		// Iterator
+		for (size_t i = 0; i < size; ++i)
 		{
-			if (m_pTable[hash].GetKey() == key)
+			HashInfo searchDataInHash = m_pTable[hash][i]->m_data;
+
+			// Found inside the table
+			if (searchDataInHash.m_key == key)
 			{
-				if (obj != nullptr)
-					*obj = m_pTable[hash].GetObject();
+				m_pTable[hash].Delete(searchDataInHash);
+				return;
+			}
+		}
+
+		std::cout << "[HashTable] DELETION FAIL: [" << key << "] Not Found\n";
+		return;
+	}
+
+	bool Find(KeyType key, HashDataType* obj = nullptr)
+	{
+		uint_32 hash;
+		hash = HashFuction(key);
+
+		size_t size = m_pTable[hash].GetSize();
+
+		// Iterator
+		for (size_t i = 0; i < size; ++i)
+		{
+			// Found inside the table
+			if (m_pTable[hash][i]->m_data.m_key == key)
+			{
+				// Save in pointer if there are given data pointer
+				if(obj != nullptr)
+					*obj = m_pTable[hash][i]->m_data.m_data;
+
 				return true;
 			}
-
-			hash += step;
-			hash %= m_size;
-
-			if (originalHash == hash)
-				return false;
 		}
+
+		// Key has not found in hashtable
 		return false;
 	}
 
-	int StepHashFunction(int key)
+	// Hashing Algorithm using fav-1a
+	uint_32 HashFuction(KeyType key)
 	{
-		return 4 - key % 4;
-	}
+		size_t size = sizeof(key);
 
-	int HashFunction(int key)
-	{
-		return key % m_size;
-	}
+		uint_32 hash;
 
-	int HashFunction(std::string& str)
-	{
-		int hash = 0;
-		for (int i = 0; i < (int)str.size(); ++i)
-		{
-			int val = (int)str[i];
-			hash = (hash & 256 + val) % m_size;
-		}
+		hash = FNV::Fnv_1a(&key) % m_hashSize;
+
 		return hash;
 	}
 
-	int GetSize()
-	{
-		return m_size;
-	}
 
+	void ShowHashTable()
+	{
+		for (size_t j = 0; j < m_hashSize; ++j)
+		{
+			if (m_pTable[j].Begin() != nullptr)
+			{
+				std::cout << "HashTable[" << j << "]: ";
+				size_t searchingHashSize = m_pTable[j].GetSize();
+				for (size_t i = 0; i < searchingHashSize; ++i)
+				{
+					std::cout << "\t==> Key<" << m_pTable[j][i]->m_data.m_key << "> Data[" << m_pTable[j][i]->m_data.m_data << "]";
+				}
+				std::cout << '\n';
+			}
+		}
+	}
 
 };
 

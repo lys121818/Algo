@@ -29,6 +29,14 @@ private:
 
 	};
 
+private:
+
+	Node* m_pHead = nullptr;
+	Node* m_pTail = nullptr;
+
+	size_t m_size = 0;
+
+
 public:
 	class Iterator
 	{
@@ -90,22 +98,15 @@ public:
 	void Delete(Value data);
 	void Print();
 
-	Iterator begin() { return m_pHead; }
-	Iterator end() { return m_pTail->m_pNext; }
+	size_t GetSize() { return m_size; }
 
-private:
-
-	Node* m_pHead = nullptr;
-	Node* m_pTail = nullptr;
-
-	size_t m_size = 0;
+	Iterator Begin() { return m_pHead; }
+	Iterator End() { return m_pTail->m_pNext; }
 
 
 	/// <summary>
 	/// Template functions
 	//////////////////////////////////////////////////
-
-public:
 
 
 private:
@@ -131,7 +132,7 @@ private:
 			pIterator = pIterator->m_pNext;
 		}
 
-		std::cout << "Data: " << dataToFind << " Not found! \n";
+		std::cout << "[LinkedList] Data: Not found! \n";
 
 		return nullptr;
 	}

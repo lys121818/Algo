@@ -128,12 +128,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="FNV.h" />
-    <ClInclude Include="HashItem.h" />
     <ClInclude Include="HashTable.h" />
-    <ClInclude Include="HashTableExample.h" />
     <ClInclude Include="LinkedList.h" />
-    <ClInclude Include="Others.h" />
-    <ClInclude Include="Sorting.h" />
+    <ClInclude Include="UtilitiesForWidget.h" />
     <ClInclude Include="SortingWidgets.h" />
     <ClInclude Include="Widget.h" />
   </ItemGroup>
