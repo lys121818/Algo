@@ -137,7 +137,6 @@
     <ClInclude Include="DifficultyRoom.h" />
     <ClInclude Include="Dungeon.h" />
     <ClInclude Include="DungeonData.h" />
-    <ClInclude Include="Priority_Queue.h" />
     <ClInclude Include="Room.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
