@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Tactigo">
+      <UniqueIdentifier>{63115d02-0f98-4035-9fde-32e345935f92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tactigo\lib">
+      <UniqueIdentifier>{904bb41d-3601-46aa-8e58-9119d6fd96d4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Tactigo\TechTree.cpp">
+      <Filter>Tactigo</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Tactigo\lib\Tech.h">
+      <Filter>Tactigo\lib</Filter>
+    </ClInclude>
+    <ClInclude Include="Tactigo\lib\TechTreeBase.h">
+      <Filter>Tactigo\lib</Filter>
+    </ClInclude>
+    <ClInclude Include="Tactigo\TechTree.h">
+      <Filter>Tactigo</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
