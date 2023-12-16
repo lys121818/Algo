@@ -13,6 +13,7 @@ class TechTree : public TechTreeBase
 public:
     using Path = std::vector<const Tech*>;
 
+    using TechRef = const Tech*;
     Path FindBestPath(size_t goalTech);
 
 
@@ -25,18 +26,24 @@ private:
 
     // Store all data using BFS search
     void BFS_BestPathFind();
-    void BFS_BestPathTactigo(const Tech* tactigo);
 
-    void SetBestPath(Path* path, const Tech* target);
+    void BFS_BestPathTactigo(TechRef tactigo);
 
-    bool ExceptionTest(Path* path, const Tech* target);
+    void SetBestPath(Path* path, TechRef target);
+
+    // TODO: check data using hasTech to set isSearched
+    void CheckData();
+
+    void ResetInfo();
+
 // [Member Variable]
 private:
     // struct stored value of each nodes
     struct TechInfo_BestPath
     {
         int m_bestCost = std::numeric_limits<int>::infinity();
-        const Tech* m_pParentTech = nullptr;
+        TechRef m_pParentTech = nullptr;
+        bool m_hasTech = false; // to check if the data is same as last path find function run
     };
 
     // Unordered Map to store TechInfo
